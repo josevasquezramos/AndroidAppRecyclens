@@ -17,6 +17,7 @@ import com.episi.recyclens.data.tflite.BoundingBox
 import com.episi.recyclens.data.tflite.Constants
 import com.episi.recyclens.data.tflite.Detector
 import com.episi.recyclens.data.tflite.DetectorListener
+import com.episi.recyclens.utils.SpeechHelper
 import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
 
@@ -35,6 +36,8 @@ class CameraFragment : Fragment(), DetectorListener {
     private val cameraExecutor = Executors.newSingleThreadExecutor()
 
     private val isFrontCamera = false // cámara trasera
+
+    private lateinit var speechHelper: SpeechHelper
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -56,6 +59,8 @@ class CameraFragment : Fragment(), DetectorListener {
         } else {
             permissionLauncher.launch(REQUIRED_PERMISSIONS)
         }
+
+        speechHelper = SpeechHelper(requireContext())
     }
 
     private fun setupObservers() {
@@ -143,6 +148,12 @@ class CameraFragment : Fragment(), DetectorListener {
     override fun onDetect(boundingBoxes: List<BoundingBox>, inferenceTime: Long) {
         requireActivity().runOnUiThread {
             viewModel.updateResults(boundingBoxes, inferenceTime)
+
+            // Escoger el box con mayor confianza
+            val topBox = boundingBoxes.maxByOrNull { it.cnf }
+            topBox?.let {
+                speechHelper.speakIfPossible(it.clsName)
+            }
         }
     }
 
@@ -156,6 +167,7 @@ class CameraFragment : Fragment(), DetectorListener {
         }
         detector.clear()
         _binding = null
+        speechHelper.shutdown()
         super.onDestroyView()
     }
 

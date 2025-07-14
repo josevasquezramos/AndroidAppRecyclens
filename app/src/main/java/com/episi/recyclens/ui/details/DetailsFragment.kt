@@ -23,7 +23,7 @@ class DetailsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val detailsViewModel =
-            ViewModelProvider(this).get(DetailsViewModel::class.java)
+            ViewModelProvider(this)[DetailsViewModel::class.java]
 
         _binding = FragmentDetailsBinding.inflate(inflater, container, false)
         val root: View = binding.root

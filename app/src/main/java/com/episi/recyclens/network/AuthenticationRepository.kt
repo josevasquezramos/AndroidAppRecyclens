@@ -4,9 +4,11 @@ import com.episi.recyclens.model.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.UserProfileChangeRequest
+import com.google.firebase.firestore.FirebaseFirestore
 
-class FirebaseAuthentication(
-    private val firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()
+class AuthenticationRepository(
+    private val firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance(),
+    private val firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
 ) {
 
     fun login(email: String, password: String, callback: Callback<FirebaseUser>) {
@@ -23,19 +25,33 @@ class FirebaseAuthentication(
         firebaseAuth.createUserWithEmailAndPassword(email, password)
             .addOnSuccessListener { result ->
                 val user = result.user
-                if (user != null && !displayName.isNullOrBlank()) {
+                if (user != null) {
                     val profileUpdates = UserProfileChangeRequest.Builder()
                         .setDisplayName(displayName)
                         .build()
                     user.updateProfile(profileUpdates)
                         .addOnSuccessListener {
-                            callback.onSuccess(user)
+                            // Crear documento en Firestore
+                            val newUser = User(
+                                uid = user.uid,
+                                email = user.email ?: "",
+                                displayName = displayName
+                            )
+                            firestore.collection("usuarios")
+                                .document(user.uid)
+                                .set(newUser)
+                                .addOnSuccessListener {
+                                    callback.onSuccess(user)
+                                }
+                                .addOnFailureListener { firestoreException ->
+                                    callback.onFailed(firestoreException)
+                                }
                         }
                         .addOnFailureListener { exception ->
                             callback.onFailed(exception)
                         }
                 } else {
-                    callback.onSuccess(user)
+                    callback.onFailed(Exception("Error al crear usuario"))
                 }
             }
             .addOnFailureListener { exception ->

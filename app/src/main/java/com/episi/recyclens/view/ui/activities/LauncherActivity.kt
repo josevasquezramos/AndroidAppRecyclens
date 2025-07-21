@@ -3,10 +3,10 @@ package com.episi.recyclens.view.ui.activities
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.episi.recyclens.network.FirebaseAuthentication
+import com.episi.recyclens.network.AuthenticationRepository
 
 class LauncherActivity(
-    private val repository: FirebaseAuthentication = FirebaseAuthentication()
+    private val repository: AuthenticationRepository = AuthenticationRepository()
 ) : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

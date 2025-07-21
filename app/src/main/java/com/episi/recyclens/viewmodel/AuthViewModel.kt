@@ -2,12 +2,12 @@ package com.episi.recyclens.viewmodel
 
 import androidx.lifecycle.ViewModel
 import com.episi.recyclens.model.User
-import com.episi.recyclens.network.FirebaseAuthentication
+import com.episi.recyclens.network.AuthenticationRepository
 import com.episi.recyclens.network.Callback
 import com.google.firebase.auth.FirebaseUser
 
 class AuthViewModel(
-    private val repository: FirebaseAuthentication = FirebaseAuthentication()
+    private val repository: AuthenticationRepository = AuthenticationRepository()
 ) : ViewModel() {
 
     fun login(email: String, password: String, callback: Callback<User>) {

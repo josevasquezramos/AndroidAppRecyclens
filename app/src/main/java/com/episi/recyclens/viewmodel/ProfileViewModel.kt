@@ -3,10 +3,10 @@ package com.episi.recyclens.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.episi.recyclens.network.FirebaseAuthentication
+import com.episi.recyclens.network.AuthenticationRepository
 
 class ProfileViewModel(
-    private val repository: FirebaseAuthentication = FirebaseAuthentication()
+    private val repository: AuthenticationRepository = AuthenticationRepository()
 ) : ViewModel() {
 
     private val _logoutEvent = MutableLiveData<Boolean>()

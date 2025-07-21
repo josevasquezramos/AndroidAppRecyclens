@@ -3,10 +3,10 @@ package com.episi.recyclens.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.episi.recyclens.network.FirebaseAuthentication
+import com.episi.recyclens.network.AuthenticationRepository
 
 class HomeViewModel(
-    repository: FirebaseAuthentication = FirebaseAuthentication()
+    repository: AuthenticationRepository = AuthenticationRepository()
 ) : ViewModel() {
 
     private val _text = MutableLiveData<String>()
@@ -17,6 +17,6 @@ class HomeViewModel(
         val name = user?.displayName
         val email = user?.email
 
-        _text.value = "¡Bienvenido, $name!\nEmail: $email"
+        _text.value = "¡Bienvenido, $name!"
     }
 }

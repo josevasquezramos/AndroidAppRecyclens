@@ -9,7 +9,30 @@
         android:id="@+id/navigation_home"
         android:name="com.episi.recyclens.view.ui.fragments.HomeFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+
+        <action
+            android:id="@+id/action_homeFragment_to_reciclajeListFragment"
+            app:destination="@id/reciclajeListFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/reciclajeListFragment"
+        android:name="com.episi.recyclens.view.ui.fragments.ReciclajeListFragment"
+        android:label="Reciclaje"
+        tools:layout="@layout/fragment_reciclaje_list">
+
+        <action
+            android:id="@+id/action_reciclajeListFragment_to_agregarReciclajeFragment"
+            app:destination="@id/agregarReciclajeFragment" />
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/agregarReciclajeFragment"
+        android:name="com.episi.recyclens.view.ui.fragments.AgregarReciclajeFragment"
+        android:label="Agregar Reciclaje"
+        tools:layout="@layout/fragment_agregar_reciclaje" />
 
     <fragment
         android:id="@+id/navigation_details"

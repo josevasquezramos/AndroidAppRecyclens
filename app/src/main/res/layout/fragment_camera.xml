@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black"
-    tools:context=".ui.camera.CameraFragment">
+    tools:context=".view.ui.fragments.CameraFragment">
 
     <androidx.camera.view.PreviewView
         android:id="@+id/view_finder"
@@ -19,7 +19,7 @@
         app:layout_constraintDimensionRatio="3:4"
         app:scaleType="fillStart" />
 
-    <com.episi.recyclens.ui.camera.CameraOverlayView
+    <com.episi.recyclens.view.ui.camera.CameraOverlayView
         android:id="@+id/overlay"
         android:layout_width="0dp"
         android:layout_height="0dp"

@@ -49,11 +49,8 @@ class HomeFragment : Fragment() {
         binding.viewPager.adapter = adapter
 
         binding.startButton.setOnClickListener {
-            val navOptions = NavOptions.Builder()
-                .setPopUpTo(R.id.navigation_home, true) // limpia la pila
-                .build()
 
-            findNavController().navigate(R.id.reciclajeListFragment, null, navOptions)
+            findNavController().navigate(R.id.reciclajeListFragment)
         }
 
         return root

@@ -25,7 +25,9 @@ class ReciclajeViewModel(
 
         listener = repository.obtenerMisReciclajes(
             onResult = { lista ->
-                _reciclajes.value = lista
+                // Ordenar la lista de reciclajes por timestamp en orden descendente
+                val reciclajesOrdenados = lista.sortedByDescending { it.timestamp }
+                _reciclajes.value = reciclajesOrdenados
             },
             onError = { e ->
                 _error.value = e.message

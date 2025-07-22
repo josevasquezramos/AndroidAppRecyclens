@@ -33,6 +33,31 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            when (destination.id) {
+                R.id.navigation_home,
+                R.id.reciclajeListFragment,
+                R.id.agregarReciclajeFragment -> {
+                    navView.menu.findItem(R.id.navigation_home).isChecked = true
+                }
+
+                R.id.navigation_details -> {
+                    navView.menu.findItem(R.id.navigation_details).isChecked = true
+                }
+
+                R.id.navigation_camera -> {
+                    navView.menu.findItem(R.id.navigation_camera).isChecked = true
+                }
+
+                R.id.navigation_map -> {
+                    navView.menu.findItem(R.id.navigation_map).isChecked = true
+                }
+
+                R.id.navigation_profile -> {
+                    navView.menu.findItem(R.id.navigation_profile).isChecked = true
+                }
+            }
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {

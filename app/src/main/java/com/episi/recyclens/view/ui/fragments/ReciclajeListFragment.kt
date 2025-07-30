@@ -41,6 +41,9 @@ class ReciclajeListFragment : Fragment() {
         adapter = ReciclajeAdapter { reciclaje ->
             if (reciclaje.estado == "canjeable") {
                 reciclajeViewModel.marcarComoCanjeado(reciclaje.id, reciclaje.cantidadKg) { success, message ->
+                    // Verificar si el fragmento sigue montado antes de usar context o view
+                    if (!isAdded || view == null) return@marcarComoCanjeado
+
                     if (success) {
                         vibrar()
                         reproducirSonido()
@@ -67,7 +70,9 @@ class ReciclajeListFragment : Fragment() {
 
         reciclajeViewModel.error.observe(viewLifecycleOwner, Observer { errorMsg ->
             errorMsg?.let {
-                Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+                if (isAdded) {
+                    Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+                }
             }
         })
 
@@ -81,17 +86,22 @@ class ReciclajeListFragment : Fragment() {
 
     @RequiresPermission(Manifest.permission.VIBRATE)
     private fun vibrar() {
-        val vibrator = requireContext().getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            vibrator.vibrate(VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE))
-        } else {
-            vibrator.vibrate(200)
+        context?.let { ctx ->
+            val vibrator = ctx.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                vibrator.vibrate(VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE))
+            } else {
+                @Suppress("DEPRECATION")
+                vibrator.vibrate(200)
+            }
         }
     }
 
     private fun reproducirSonido() {
-        val mediaPlayer = android.media.MediaPlayer.create(requireContext(), R.raw.canjeo_exito)
-        mediaPlayer.setOnCompletionListener { it.release() }
-        mediaPlayer.start()
+        context?.let { ctx ->
+            val mediaPlayer = android.media.MediaPlayer.create(ctx, R.raw.canjeo_exito)
+            mediaPlayer.setOnCompletionListener { it.release() }
+            mediaPlayer.start()
+        }
     }
 }

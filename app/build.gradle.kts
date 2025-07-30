@@ -61,6 +61,16 @@ dependencies {
     implementation(libs.firebase.auth)
     implementation(libs.firebase.firestore.ktx)
 
+    implementation(libs.play.services.maps)
+    implementation(platform(libs.okhttp.bom))
+    implementation(libs.okhttp)
+    implementation(libs.okhttp3.okhttp)
+    implementation(libs.json)
+
+    implementation(libs.android.maps.utils)
+    implementation(libs.google.firebase.firestore.ktx)
+    implementation(libs.kotlinx.coroutines.play.services)
+
     implementation(libs.androidx.camera.camera2)
     implementation(libs.androidx.camera.lifecycle)
     implementation(libs.androidx.camera.view)

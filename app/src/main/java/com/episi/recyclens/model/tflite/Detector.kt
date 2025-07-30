@@ -38,26 +38,28 @@ class Detector(
         .build()
 
     fun setup() {
-        val model = FileUtil.loadMappedFile(context, modelPath)
-        val options = Interpreter.Options().apply {
-            numThreads = 4
-        }
-        interpreter = Interpreter(model, options)
+        try {
+            val model = FileUtil.loadMappedFile(context, modelPath)
+            val options = Interpreter.Options().apply { numThreads = 4 }
+            interpreter = Interpreter(model, options)
 
-        interpreter?.getInputTensor(0)?.shape()?.let {
-            tensorWidth = it[1]
-            tensorHeight = it[2]
-        }
-
-        interpreter?.getOutputTensor(0)?.shape()?.let {
-            numChannel = it[1]
-            numElements = it[2]
-        }
-
-        context.assets.open(labelPath).use { inputStream ->
-            BufferedReader(InputStreamReader(inputStream)).useLines { lines ->
-                lines.forEach { labels.add(it) }
+            interpreter?.getInputTensor(0)?.shape()?.let {
+                tensorWidth = it[1]
+                tensorHeight = it[2]
             }
+
+            interpreter?.getOutputTensor(0)?.shape()?.let {
+                numChannel = it[1]
+                numElements = it[2]
+            }
+
+            context.assets.open(labelPath).use { inputStream ->
+                BufferedReader(InputStreamReader(inputStream)).useLines { lines ->
+                    labels = lines.filter { it.isNotBlank() }.toMutableList()
+                }
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
     }
 
@@ -133,10 +135,12 @@ class Detector(
 
                 if (x1 < 0f || y1 < 0f || x2 > 1f || y2 > 1f) continue
 
+                val label = if (classIdx in labels.indices) labels[classIdx] else "Desconocido"
+
                 boxes.add(
                     BoundingBox(
                         x1, y1, x2, y2, cx, cy, w, h,
-                        maxConf, classIdx, labels[classIdx]
+                        maxConf, classIdx, label
                     )
                 )
             }

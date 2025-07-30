@@ -1,13 +1,22 @@
 package com.episi.recyclens.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.episi.recyclens.model.PuntoReciclaje
+import com.episi.recyclens.network.PuntoReciclajeRepository
 
-class MapViewModel : ViewModel() {
+class MapViewModel(
+    private val repository: PuntoReciclajeRepository = PuntoReciclajeRepository()
+) : ViewModel() {
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is map Fragment"
+    fun obtenerPuntosPorTipo(
+        tipo: String,
+        onResult: (List<PuntoReciclaje>) -> Unit,
+        onError: (Exception) -> Unit = {}
+    ) {
+        repository.obtenerPuntosPorTipo(
+            tipo = tipo,
+            onResult = onResult,
+            onError = onError
+        )
     }
-    val text: LiveData<String> = _text
 }

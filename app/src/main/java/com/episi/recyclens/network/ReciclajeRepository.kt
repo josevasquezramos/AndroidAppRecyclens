@@ -69,4 +69,23 @@ class ReciclajeRepository(
             callback.onFailed(it)
         }
     }
+
+    fun obtenerReciclajePorId(
+        reciclajeId: String,
+        onSuccess: (Reciclaje) -> Unit,
+        onError: (Exception) -> Unit
+    ): ListenerRegistration {
+        return firestore.collection("reciclajes")
+            .document(reciclajeId)
+            .addSnapshotListener { snapshot, error ->
+                if (error != null) {
+                    onError(Exception("Error en tiempo real: ${error.message}"))
+                    return@addSnapshotListener
+                }
+
+                snapshot?.toObject(Reciclaje::class.java)?.let {
+                    onSuccess(it)
+                } ?: onError(Exception("Documento no encontrado"))
+            }
+    }
 }

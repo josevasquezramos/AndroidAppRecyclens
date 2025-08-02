@@ -1,12 +1,6 @@
 package com.episi.recyclens.view.ui.fragments
 
-import android.Manifest
-import android.content.Context
-import android.os.Build
 import android.os.Bundle
-import android.os.VibrationEffect
-import android.os.Vibrator
-import android.os.VibratorManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,8 +11,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.episi.recyclens.R
 import com.episi.recyclens.databinding.FragmentReciclajeListBinding
+import com.episi.recyclens.utils.FeedbackUtils
 import com.episi.recyclens.view.adapter.ReciclajeAdapter
 import com.episi.recyclens.viewmodel.ReciclajeViewModel
 
@@ -46,8 +40,7 @@ class ReciclajeListFragment : Fragment() {
                     if (!isAdded) return@marcarComoCanjeado
 
                     if (success) {
-                        vibrar()
-                        reproducirSonido()
+                        darFeedbackExito()
                         Toast.makeText(requireContext(), "¡Reciclaje canjeado! Felicidades 🎉", Toast.LENGTH_LONG).show()
                     } else {
                         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
@@ -80,43 +73,16 @@ class ReciclajeListFragment : Fragment() {
         reciclajeViewModel.cargarReciclajes()
     }
 
+    @RequiresPermission(android.Manifest.permission.VIBRATE)
+    private fun darFeedbackExito() {
+        context?.let {
+            FeedbackUtils.vibrar(it)
+            FeedbackUtils.reproducirSonidoCanjeo(it)
+        }
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    @RequiresPermission(Manifest.permission.VIBRATE)
-    private fun vibrar() {
-        context?.let { ctx ->
-            val vibratorManager = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                ctx.getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager
-            } else {
-                null
-            }
-
-            val vibrator = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                vibratorManager?.defaultVibrator
-            } else {
-                @Suppress("DEPRECATION")
-                ctx.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
-            }
-
-            vibrator?.let { v ->
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    v.vibrate(VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE))
-                } else {
-                    @Suppress("DEPRECATION")
-                    v.vibrate(200)
-                }
-            }
-        }
-    }
-
-    private fun reproducirSonido() {
-        context?.let { ctx ->
-            val mediaPlayer = android.media.MediaPlayer.create(ctx, R.raw.canjeo_exito)
-            mediaPlayer.setOnCompletionListener { it.release() }
-            mediaPlayer.start()
-        }
     }
 }

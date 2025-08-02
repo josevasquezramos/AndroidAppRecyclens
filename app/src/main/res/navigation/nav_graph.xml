@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
@@ -9,7 +10,7 @@
         android:id="@+id/navigation_home"
         android:name="com.episi.recyclens.view.ui.fragments.HomeFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" >
+        tools:layout="@layout/fragment_home">
 
         <action
             android:id="@+id/action_homeFragment_to_reciclajeListFragment"
@@ -25,14 +26,28 @@
         <action
             android:id="@+id/action_reciclajeListFragment_to_agregarReciclajeFragment"
             app:destination="@id/agregarReciclajeFragment" />
-    </fragment>
 
+        <action
+            android:id="@+id/action_reciclajeListFragment_to_reciclajeDetailFragment"
+            app:destination="@id/reciclajeDetailFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/agregarReciclajeFragment"
         android:name="com.episi.recyclens.view.ui.fragments.AgregarReciclajeFragment"
         android:label="Agregar Reciclaje"
         tools:layout="@layout/fragment_agregar_reciclaje" />
+
+    <fragment
+        android:id="@+id/reciclajeDetailFragment"
+        android:name="com.episi.recyclens.view.ui.fragments.ReciclajeDetailFragment"
+        android:label="Detalle Reciclaje"
+        tools:layout="@layout/fragment_reciclaje_detail">
+
+        <argument
+            android:name="reciclajeId"
+            app:argType="string" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_details"

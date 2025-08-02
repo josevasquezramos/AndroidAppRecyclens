@@ -5,11 +5,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.navigation.Navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.episi.recyclens.R
 import com.episi.recyclens.model.Reciclaje
+import com.episi.recyclens.view.ui.fragments.ReciclajeListFragmentDirections
 
 class ReciclajeAdapter(
     private val onCanjearClick: (Reciclaje) -> Unit
@@ -40,12 +42,22 @@ class ReciclajeAdapter(
                 "pendiente" -> "Pendiente"
                 "canjeable" -> "Canjear"
                 "canjeado" -> "Canjeado"
-                else -> "Desconocido"
+                else -> "No canjeable"
             }
             btnCanjear.isEnabled = item.estado == "canjeable"
+
+            // Aquí añadimos el click listener para el item completo
+            itemView.setOnClickListener {
+                // Necesitamos acceso al NavController, lo obtenemos a través de la vista
+                val navController = findNavController(itemView)
+                val action = ReciclajeListFragmentDirections
+                    .actionReciclajeListFragmentToReciclajeDetailFragment(item.id)
+                navController.navigate(action)
+            }
+
             btnCanjear.setOnClickListener {
                 if (item.estado == "canjeable") {
-                    onCanjearClick(item) // Esto llama al fragment y le deja a él manejar los efectos
+                    onCanjearClick(item)
                 }
             }
         }

@@ -9,9 +9,9 @@
               <option name="connection">
                 <ConnectionSetting>
                   <option name="appId" value="com.episi.recyclens" />
-                  <option name="mobileSdkAppId" value="1:988876500832:android:10763ab265d66404df3805" />
-                  <option name="projectId" value="recyclens-39b72" />
-                  <option name="projectNumber" value="988876500832" />
+                  <option name="mobileSdkAppId" value="1:513649551770:android:40bd5ba7ee8dd7ffe53223" />
+                  <option name="projectId" value="recyclens-3dcfc" />
+                  <option name="projectNumber" value="513649551770" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />

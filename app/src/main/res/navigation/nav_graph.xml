@@ -18,6 +18,16 @@
     </fragment>
 
     <fragment
+        android:id="@+id/editarReciclajeFragment"
+        android:name="com.episi.recyclens.view.ui.fragments.EditarReciclajeFragment"
+        android:label="Editar Reciclaje"
+        tools:layout="@layout/fragment_editar_reciclaje">
+        <argument
+            android:name="reciclajeId"
+            app:argType="string" />
+    </fragment>
+
+    <fragment
         android:id="@+id/reciclajeListFragment"
         android:name="com.episi.recyclens.view.ui.fragments.ReciclajeListFragment"
         android:label="Reciclaje"
@@ -30,6 +40,10 @@
         <action
             android:id="@+id/action_reciclajeListFragment_to_reciclajeDetailFragment"
             app:destination="@id/reciclajeDetailFragment" />
+
+        <action
+            android:id="@+id/action_reciclajeListFragment_to_editarReciclajeFragment"
+            app:destination="@id/editarReciclajeFragment" />
     </fragment>
 
     <fragment

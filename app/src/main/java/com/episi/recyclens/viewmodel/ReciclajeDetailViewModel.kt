@@ -32,19 +32,10 @@ class ReciclajeDetailViewModel(
         )
     }
 
-    fun marcarComoCanjeado(id: String, cantidadKg: Double, onFinish: (Boolean, String?) -> Unit) {
+    fun marcarComoCanjeado(id: String, onFinish: (Boolean, String?) -> Unit) {
         repository.actualizarEstadoReciclaje(id, "canjeado", object : Callback<Void> {
             override fun onSuccess(result: Void?) {
-                // Sumar puntos al usuario (ejemplo: 10 puntos por kilo)
-                val puntosASumar = (cantidadKg * 10).toInt()
-                repository.sumarPuntosAlUsuario(puntosASumar, object : Callback<Void> {
-                    override fun onSuccess(result: Void?) {
-                        onFinish(true, null)
-                    }
-                    override fun onFailed(exception: Exception) {
-                        onFinish(false, "Error al sumar puntos: ${exception.message}")
-                    }
-                })
+                onFinish(true, null) // Solo éxito al actualizar estado
             }
             override fun onFailed(exception: Exception) {
                 onFinish(false, "Error al actualizar estado: ${exception.message}")

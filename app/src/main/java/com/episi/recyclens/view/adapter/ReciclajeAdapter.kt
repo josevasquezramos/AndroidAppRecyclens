@@ -4,7 +4,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.PopupMenu
 import android.widget.TextView
+import android.widget.Toast
 import androidx.navigation.Navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -14,7 +16,9 @@ import com.episi.recyclens.model.Reciclaje
 import com.episi.recyclens.view.ui.fragments.ReciclajeListFragmentDirections
 
 class ReciclajeAdapter(
-    private val onCanjearClick: (Reciclaje) -> Unit
+    private val onCanjearClick: (Reciclaje) -> Unit,
+    private val onEditarClick: (Reciclaje) -> Unit,
+    private val onEliminarClick: (Reciclaje) -> Unit
 ) : ListAdapter<Reciclaje, ReciclajeAdapter.ReciclajeViewHolder>(DiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReciclajeViewHolder {
@@ -59,6 +63,37 @@ class ReciclajeAdapter(
                 if (item.estado == "canjeable") {
                     onCanjearClick(item)
                 }
+            }
+
+            itemView.setOnLongClickListener {
+                if (item.estado == "pendiente") {
+                    mostrarMenuContextual(item)
+                } else {
+                    Toast.makeText(itemView.context,
+                        "Opciones disponibles solo para reciclajes pendientes",
+                        Toast.LENGTH_SHORT).show()
+                }
+                true
+            }
+        }
+
+        private fun mostrarMenuContextual(reciclaje: Reciclaje) {
+            PopupMenu(itemView.context, itemView).apply {
+                menuInflater.inflate(R.menu.menu_reciclaje, menu)
+                setOnMenuItemClickListener { menuItem ->
+                    when (menuItem.itemId) {
+                        R.id.menu_editar -> {
+                            onEditarClick(reciclaje)
+                            true
+                        }
+                        R.id.menu_eliminar -> {
+                            onEliminarClick(reciclaje) // Delegamos al Fragment
+                            true
+                        }
+                        else -> false
+                    }
+                }
+                show()
             }
         }
     }

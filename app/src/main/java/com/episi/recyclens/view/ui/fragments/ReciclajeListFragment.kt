@@ -1,5 +1,6 @@
 package com.episi.recyclens.view.ui.fragments
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +13,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.episi.recyclens.databinding.FragmentReciclajeListBinding
+import com.episi.recyclens.model.Reciclaje
 import com.episi.recyclens.utils.FeedbackUtils
 import com.episi.recyclens.view.adapter.ReciclajeAdapter
 import com.episi.recyclens.viewmodel.ReciclajeViewModel
@@ -33,21 +35,33 @@ class ReciclajeListFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        adapter = ReciclajeAdapter { reciclaje ->
-            if (reciclaje.estado == "canjeable") {
-                reciclajeViewModel.marcarComoCanjeado(reciclaje.id, reciclaje.cantidadKg) { success, message ->
-                    // Verificar si el fragmento sigue montado antes de usar context o view
-                    if (!isAdded) return@marcarComoCanjeado
 
-                    if (success) {
-                        darFeedbackExito()
-                        Toast.makeText(requireContext(), "¡Reciclaje canjeado! Felicidades 🎉", Toast.LENGTH_LONG).show()
-                    } else {
-                        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+        adapter = ReciclajeAdapter(
+            onCanjearClick = { reciclaje ->
+                if (reciclaje.estado == "canjeable") {
+                    reciclajeViewModel.marcarComoCanjeado(reciclaje.id) { success, message ->
+                        // Verificar si el fragmento sigue montado antes de usar context o view
+                        if (!isAdded) return@marcarComoCanjeado
+
+                        if (success) {
+                            darFeedbackExito()
+                            Toast.makeText(requireContext(), "¡Reciclaje canjeado! Felicidades 🎉", Toast.LENGTH_LONG).show()
+                        } else {
+                            Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+                        }
                     }
                 }
+            },
+            onEditarClick = { reciclaje ->
+                findNavController().navigate(
+                    ReciclajeListFragmentDirections
+                        .actionReciclajeListFragmentToEditarReciclajeFragment(reciclaje.id)
+                )
+            },
+            onEliminarClick = { reciclaje ->
+                mostrarDialogoConfirmacion(reciclaje)
             }
-        }
+        )
 
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerView.adapter = adapter
@@ -71,6 +85,41 @@ class ReciclajeListFragment : Fragment() {
         })
 
         reciclajeViewModel.cargarReciclajes()
+    }
+
+    private fun mostrarDialogoConfirmacion(reciclaje: Reciclaje) {
+        AlertDialog.Builder(requireContext())
+            .setTitle("Confirmar eliminación")
+            .setMessage("¿Estás seguro de eliminar este reciclaje de ${reciclaje.tipo} (${reciclaje.cantidadKg} kg)?")
+            .setPositiveButton("Eliminar") { _, _ ->
+                reciclajeViewModel.eliminarReciclaje(reciclaje.id, reciclaje.estado) { success, message ->
+                    if (isAdded) {
+                        if (success) {
+                            Toast.makeText(requireContext(), "Reciclaje eliminado", Toast.LENGTH_SHORT).show()
+                        } else {
+                            Toast.makeText(requireContext(), message ?: "Error al eliminar", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }
+            }
+            .setNegativeButton("Cancelar", null)
+            .show()
+    }
+
+    private fun eliminarReciclaje(reciclajeId: String, estado: String) {
+        reciclajeViewModel.eliminarReciclaje(reciclajeId, estado) { success, message ->
+            if (isAdded) {
+                if (success) {
+                    Toast.makeText(requireContext(), "Reciclaje eliminado", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(
+                        requireContext(),
+                        message ?: "Error al eliminar",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+        }
     }
 
     @RequiresPermission(android.Manifest.permission.VIBRATE)

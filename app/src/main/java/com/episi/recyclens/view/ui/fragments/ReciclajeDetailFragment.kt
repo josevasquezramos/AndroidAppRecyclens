@@ -9,6 +9,7 @@ import androidx.annotation.RequiresPermission
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
+import com.bumptech.glide.Glide
 import com.episi.recyclens.databinding.FragmentReciclajeDetailBinding
 import com.episi.recyclens.utils.FeedbackUtils
 import com.episi.recyclens.viewmodel.ReciclajeDetailViewModel
@@ -43,6 +44,13 @@ class ReciclajeDetailFragment : Fragment() {
                 binding.textUbicacion.text = "Ubicación: (${reciclaje.latitud}, ${reciclaje.longitud})"
                 binding.textFecha.text = "Fecha: ${SimpleDateFormat("dd/MM/yyyy HH:mm").format(reciclaje.timestamp)}"
 
+                reciclaje.fotoUrl.takeIf { it.isNotBlank() }?.let { url ->
+                    binding.imageViewFoto.visibility = View.VISIBLE
+                    Glide.with(requireContext())
+                        .load(url)
+                        .into(binding.imageViewFoto)
+                }
+
                 binding.btnCanjear.apply {
                     text = when (reciclaje.estado) {
                         "pendiente" -> "Pendiente"
@@ -53,7 +61,7 @@ class ReciclajeDetailFragment : Fragment() {
                     isEnabled = reciclaje.estado == "canjeable"
                     setOnClickListener {
                         if (reciclaje.estado == "canjeable") {
-                            viewModel.marcarComoCanjeado(reciclaje.id, reciclaje.cantidadKg) { success, message ->
+                            viewModel.marcarComoCanjeado(reciclaje.id) { success, message ->
                                 if (!isAdded) return@marcarComoCanjeado
 
                                 if (success) {

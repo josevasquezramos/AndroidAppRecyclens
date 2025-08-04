@@ -8,5 +8,6 @@ data class Reciclaje(
     val latitud: Double = 0.0,
     val longitud: Double = 0.0,
     val estado: String = "pendiente", // pendiente | canjeable | canjeado
+    val fotoUrl: String = "",
     val timestamp: Long = System.currentTimeMillis()
 )

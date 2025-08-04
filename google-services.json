@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "513649551770",
+    "project_id": "recyclens-3dcfc",
+    "storage_bucket": "recyclens-3dcfc.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:513649551770:android:40bd5ba7ee8dd7ffe53223",
+        "android_client_info": {
+          "package_name": "com.episi.recyclens"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCHj-lbhHOKr6reKu5LHx40YUtLtyHXoZQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

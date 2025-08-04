@@ -70,6 +70,13 @@ dependencies {
     implementation(libs.firebase.firestore.ktx)
     implementation(libs.firebase.storage.ktx)
 
+    implementation(libs.play.services.maps)
+    implementation(libs.google.maps.services)
+    implementation(libs.slf4j.simple)
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
+    implementation(libs.easypermissions.ktx)
+
     implementation(libs.androidx.camera.camera2)
     implementation(libs.androidx.camera.lifecycle)
     implementation(libs.androidx.camera.view)

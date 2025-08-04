@@ -9,4 +9,15 @@
     <color name="white">#FFFFFFFF</color>
 
     <color name="bounding_box_color">#234567</color>
+
+    <!-- Custom colors -->
+    <color name="teal_accent">#4DB6AC</color>
+    <color name="dark_gray">#424242</color>
+    <color name="icon_gray">#757575</color>
+    <color name="hint_gray">#9E9E9E</color>
+    <color name="input_background">#F5F5F5</color>
+    <color name="gradient_start">#EDE7F6</color>
+    <color name="gradient_end">#C7B5E3</color>
+    <color name="top_curve_start">#7DB5A6</color>
+    <color name="top_curve_end">#6B9B8D</color>
 </resources>

@@ -1,10 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="60dp"
+    android:background="@drawable/home_background_gradient"
     tools:context=".view.ui.fragments.HomeFragment">
 
     <!-- Mensaje de bienvenida -->
@@ -12,35 +11,82 @@
         android:id="@+id/text_home"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="¡Bienvenido a la app de reciclaje!"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginEnd="32dp"
+        android:fontFamily="sans-serif-light"
+        android:text="¡Bienvenido a la\nApp de Reciclaje!"
         android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:textAppearance="?attr/textAppearanceHeadline4"
+        android:textColor="?attr/colorOnPrimary"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="16dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed"
+        app:layout_constraintBottom_toTopOf="@+id/viewPager_card"/>
 
-    <!-- Carrusel de imágenes y frases -->
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/viewPager"
+    <!-- Card para el ViewPager para darle un mejor aspecto y elevación -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/viewPager_card"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="32dp"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="8dp"
         app:layout_constraintTop_toBottomOf="@id/text_home"
         app:layout_constraintBottom_toTopOf="@id/start_button"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp" />
+        app:layout_constraintEnd_toEndOf="parent">
 
-    <!-- Botón Comencemos -->
-    <Button
-        android:id="@+id/start_button"
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/viewPager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+        <!-- Asegúrate que las páginas de tu ViewPager2 tengan fondos o contenido visual atractivo -->
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- Indicador de página para el ViewPager (Opcional, pero recomendado) -->
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tab_indicator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Comencemos"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="16dp"
+        android:background="@android:color/transparent"
+        app:layout_constraintBottom_toTopOf="@id/start_button"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginBottom="24dp" />
+        app:tabBackground="@drawable/tab_selector"
+        app:tabGravity="center"
+        app:tabIndicatorHeight="0dp"
+        app:tabRippleColor="@null" />
+
+
+    <!-- Botón Comencemos -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/start_button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="48dp"
+        android:layout_marginEnd="48dp"
+        android:layout_marginBottom="70dp"
+        android:paddingTop="12dp"
+        android:paddingBottom="12dp"
+        android:text="Comencemos"
+        android:textAppearance="?attr/textAppearanceButton"
+        android:textStyle="bold"
+        app:cornerRadius="24dp"
+        app:icon="@drawable/ic_arrow_forward"
+        app:iconGravity="textEnd"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:backgroundTint="?attr/colorPrimary"
+        app:iconTint="?attr/colorOnPrimary"
+        android:textColor="?attr/colorOnPrimary"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -10,7 +10,7 @@
     <View
         android:id="@+id/top_background_view"
         android:layout_width="0dp"
-        android:layout_height="160dp"
+        android:layout_height="100dp"
         android:background="@drawable/bg_profile_top_curve"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -27,7 +27,7 @@
         app:layout_constraintStart_toStartOf="@id/top_background_view"
         app:layout_constraintTop_toTopOf="@id/top_background_view"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="10dp"
         android:contentDescription="Decorative Circle" />
 
     <ImageView

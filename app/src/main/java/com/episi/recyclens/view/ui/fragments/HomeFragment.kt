@@ -39,6 +39,9 @@ class HomeFragment : Fragment() {
         }
 
         val carouselItems = listOf(
+            CarouselAdapter.CarouselItem(R.drawable.logo_scrollable_first, "♻\uFE0F Reciclar es cuidar el planeta."),
+            CarouselAdapter.CarouselItem(R.drawable.logo_scrollable_second, "\uD83C\uDF0D Tu basura puede tener una segunda vida."),
+            CarouselAdapter.CarouselItem(R.drawable.logo_scrollable_third, "\uD83D\uDDD1\uFE0F Separar hoy, salvar mañana."),
             CarouselAdapter.CarouselItem(R.drawable.papel, "Recicla el papel para salvar árboles"),
             CarouselAdapter.CarouselItem(R.drawable.metal, "El metal reciclado ahorra energía"),
             CarouselAdapter.CarouselItem(R.drawable.plastico, "El plástico tarda siglos en degradarse"),

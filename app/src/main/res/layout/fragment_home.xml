@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="20dp"
     android:paddingBottom="60dp"
     tools:context=".view.ui.fragments.HomeFragment">
 
@@ -12,35 +13,67 @@
         android:id="@+id/text_home"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/comfortaa_bold"
         android:text="¡Bienvenido a la app de reciclaje!"
         android:textAlignment="center"
         android:textSize="20sp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="16dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Título principal -->
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/title_residuos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/comfortaa_bold"
+        android:letterSpacing="0.1"
+        android:text="RESIDUOS DE PAPEL"
+        android:textColor="@color/home_color_scrollable"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text_home" />
 
     <!-- Carrusel de imágenes y frases -->
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewPager"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@id/text_home"
-        app:layout_constraintBottom_toTopOf="@id/start_button"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp" />
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toTopOf="@id/start_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title_residuos" />
 
-    <!-- Botón Comencemos -->
-    <Button
+
+    <!-- View guía para evitar el menú inferior -->
+    <View
+        android:id="@+id/bottom_guide"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="80dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/start_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Comencemos"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:fontFamily="@font/comfortaa_bold"
+        android:text="¡Comencemos!"
+        android:textColor="@android:color/black"
+        android:textSize="12sp"
+        app:backgroundTint="@color/teal_accent"
+        app:cornerRadius="25dp"
+        app:elevation="4dp"
+        app:layout_constraintBottom_toTopOf="@id/bottom_guide"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginBottom="24dp" />
+        app:layout_constraintStart_toStartOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

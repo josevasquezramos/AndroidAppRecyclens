@@ -9,6 +9,7 @@
     <color name="white">#FFFFFFFF</color>
 
     <color name="bounding_box_color">#234567</color>
+    <color name="home_color_scrollable">#235752</color>
 
     <!-- Custom colors -->
     <color name="teal_accent">#4DB6AC</color>

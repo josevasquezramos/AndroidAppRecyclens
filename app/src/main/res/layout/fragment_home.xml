@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:padding="20dp"
     android:paddingBottom="60dp"
-    android:background="@drawable/gradient_background"
     tools:context=".view.ui.fragments.HomeFragment">
 
     <!-- Mensaje de bienvenida -->

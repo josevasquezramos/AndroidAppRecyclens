@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="60dp"
-    android:background="@drawable/gradient_background"
     tools:context=".view.ui.fragments.MapFragment">
 
     <fragment
